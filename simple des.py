@@ -1,10 +1,20 @@
-def squares(a,b):
-    if (a,b) != 0 :
-        return a ** b
-    else:
-        raise ValueError("argument cant be zero")
+from functools import wraps
 
+def squares(func):
+    @wraps(func)
+    def inner(*args,**kwargs):
+        for i in args:
+            if i == 0 :
+                raise ValueError("argument cant be zero")
+        return func(*args,*kwargs)
+    return inner
 
-new_squares = squares(0,0)
+@squares
+def qs(a,b):
+    '''returns first argument raisded by the seccond'''
+    return a ** b
 
-print(new_squares)
+print(qs(5,2))
+
+from functools import wraps
+
